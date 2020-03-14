@@ -82,3 +82,21 @@ rtt min/avg/max/mdev = 0.097/0.299/0.702/0.284 ms
 こんな感じで帰ってくればOK
 
 ipアドレスで指定しなくてもコンテナ名で指定できるので楽ちん
+
+## 動作確認
+elasticsearchをpythonから使ってみようと思う。
+
+```python
+from elasticsearch import Elasticsearch
+# hostnameはelasticsearchなのでipアドレスではなくホスト名を指定
+es = Elasticsearch("elasticsearch")
+# Falseが帰ってくればOK
+print(es.indices.exists(index="aa"))
+```
+
+以上をvimで作成（今回は[ test.py ]とする）
+
+```bash
+python3 test.py
+```
+で実行する。Falseが帰ってくれば成功しているはず。
