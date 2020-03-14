@@ -23,7 +23,10 @@ RUN set -x \
                 iputils-ping \
                 net-tools \
 && apt-get -y clean \
-&& rm -rf /var/lib/apt/lists/*
+&& rm -rf /var/lib/apt/lists/* \
+
+# python関係
+&& pip3 install elasticsearch
 
 # 一般ユーザーアカウントを追加
 RUN useradd -m ${USER}
