@@ -56,3 +56,29 @@ Creating ubuntu18.04   ... done
 Creating elasticsearch ... done
 ```
 このログが出たらOK
+
+環境を合わせるためにubuntuを入れているので  
+ubuntuの中に入る
+```bash 
+docker exec -it ubuntu18.04 zsh
+```
+
+中に入れたら、pingでelasticsearchを探す
+
+```bash 
+ping elasticsearch
+```
+
+```log
+PING elasticsearch (172.18.0.3) 56(84) bytes of data.
+64 bytes from elasticsearch.docker_es_default (172.18.0.3): icmp_seq=1 ttl=64 time=0.702 ms
+64 bytes from elasticsearch.docker_es_default (172.18.0.3): icmp_seq=2 ttl=64 time=0.097 ms
+64 bytes from elasticsearch.docker_es_default (172.18.0.3): icmp_seq=3 ttl=64 time=0.098 ms
+^C
+--- elasticsearch ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2007ms
+rtt min/avg/max/mdev = 0.097/0.299/0.702/0.284 ms
+```
+こんな感じで帰ってくればOK
+
+ipアドレスで指定しなくてもコンテナ名で指定できるので楽ちん
