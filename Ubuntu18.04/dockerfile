@@ -20,6 +20,8 @@ RUN set -x \
                 git \ 
                 python3 \
                 python3-pip \
+                iputils-ping \
+                net-tools \
 && apt-get -y clean \
 && rm -rf /var/lib/apt/lists/*
 
