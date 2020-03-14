@@ -1,0 +1,44 @@
+# 仮想化するベースOS
+FROM ubuntu:18.04
+# 誰が作ったかは入れておきましょう
+LABEL maintainer="amano123"
+
+# 各環境変数を設定
+ENV USER "amano"
+ENV HOME /home/$USER
+ENV DEBCONF_NOWARNINGS yes
+ENV SHELL /usr/bin/zsh
+
+RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
+
+RUN set -x \
+&&  apt-get update \
+&&  apt-get install -y --no-install-recommends \
+                sudo \
+                zsh \
+                vim \
+                git \ 
+                python3 \
+                python3-pip \
+&& apt-get -y clean \
+&& rm -rf /var/lib/apt/lists/*
+
+# 一般ユーザーアカウントを追加
+RUN useradd -m ${USER}
+
+# 一般ユーザーにsudo権限を付与
+RUN gpasswd -a ${USER} sudo
+
+# 一般ユーザーのパスワード設定
+RUN echo "${USER}:amano" | chpasswd
+
+# 以降のRUN/CMDを実行するユーザー
+USER $USER
+
+# zshの設定ファイルをコピー
+COPY .zshrc ${HOME}
+
+# 以降の作業ディレクトリを指定
+WORKDIR ${HOME}
+
+CMD ["/bin/zsh"]
