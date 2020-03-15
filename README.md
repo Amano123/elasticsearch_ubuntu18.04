@@ -13,7 +13,11 @@ volumeをどの様に管理するかは後々考えて行こうと思う
 │   └── dockerfile
 ├── README.md
 ├── Ubuntu18.04
-│   └── dockerfile
+│   ├── dockerfile
+│   ├── jupyter_lab
+│   └── python3
+│       └── library
+│           └── library.txt
 ├── docker-compose.yml
 └── es-data
 ```
