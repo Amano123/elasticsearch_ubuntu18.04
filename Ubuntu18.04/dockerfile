@@ -9,6 +9,15 @@ ENV HOME /home/${USER}
 ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
 
+# 一般ユーザーアカウントを追加
+RUN useradd -m ${USER}
+
+# 一般ユーザーにsudo権限を付与
+RUN gpasswd -a ${USER} sudo
+
+# 一般ユーザーのパスワード設定
+RUN echo "${USER}:amano" | chpasswd
+
 # 設定ファイルをコピー
 ## zsh
 COPY .zshrc ${HOME}
@@ -34,20 +43,8 @@ RUN set -x \
 && rm -rf /var/lib/apt/lists/* \
 && locale-gen ja_JP.UTF-8 
 
-# 一般ユーザーアカウントを追加
-RUN useradd -m ${USER}
-
-# 一般ユーザーにsudo権限を付与
-RUN gpasswd -a ${USER} sudo
-
-# 一般ユーザーのパスワード設定
-RUN echo "${USER}:amano" | chpasswd
-
 # 以降のRUN/CMDを実行するユーザー
-USER $USER
-
-# zshの設定ファイルをコピー
-COPY .zshrc ${HOME}
+USER ${USER}
 
 # 以降の作業ディレクトリを指定
 WORKDIR ${HOME}
