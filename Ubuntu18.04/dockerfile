@@ -9,6 +9,12 @@ ENV HOME /home/$USER
 ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
 
+# 設定ファイルをコピー
+## zsh
+COPY .zshrc ${HOME}
+## python
+COPY ./python3/library/library.txt ${HOME}
+
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 
 RUN set -x \
