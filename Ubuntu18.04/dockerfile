@@ -5,7 +5,7 @@ LABEL maintainer="amano123"
 
 # 各環境変数を設定
 ENV USER "amano"
-ENV HOME /home/$USER
+ENV HOME /home/${USER}
 ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
 
