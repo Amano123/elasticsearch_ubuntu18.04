@@ -8,6 +8,8 @@ ENV USER "amano"
 ENV HOME /home/${USER}
 ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
+# jupyter PATH
+ENV PATH $PATH:/home/${USER}/.local/bin
 
 # 一般ユーザーアカウントを追加
 RUN useradd -m ${USER}
