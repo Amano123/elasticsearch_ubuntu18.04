@@ -12,13 +12,11 @@ ENV SHELL /usr/bin/zsh
 ENV PATH $PATH:/home/${USER}/.local/bin
 
 # 一般ユーザーアカウントを追加
-RUN useradd -m ${USER}
-
+RUN useradd -m ${USER} \
 # 一般ユーザーにsudo権限を付与
-RUN gpasswd -a ${USER} sudo
-
+&&  gpasswd -a ${USER} sudo \
 # 一般ユーザーのパスワード設定
-RUN echo "${USER}:amano" | chpasswd
+&&  echo "${USER}:amano" | chpasswd
 
 # 設定ファイルをコピー
 ## zsh
