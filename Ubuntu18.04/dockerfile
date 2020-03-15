@@ -33,10 +33,13 @@ RUN set -x \
                 zsh \
                 vim \
                 git \ 
+                ## python3 
                 python3 \
                 python3-pip \
                 iputils-ping \
+                ## network
                 net-tools \
+                ## japanese
                 language-pack-ja-base \
                 language-pack-ja \
 && apt-get -y clean \
