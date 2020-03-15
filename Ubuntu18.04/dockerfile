@@ -41,9 +41,8 @@ RUN set -x \
                 ## japanese
                 language-pack-ja-base \
                 language-pack-ja \
-&& apt-get -y clean \
-&& rm -rf /var/lib/apt/lists/* \
-&& locale-gen ja_JP.UTF-8 
+&&  ln -s /usr/bin/python3 /usr/bin/python \
+&&  ln -s /usr/bin/pip3 /usr/bin/pip \
 
 # 以降のRUN/CMDを実行するユーザー
 USER ${USER}
