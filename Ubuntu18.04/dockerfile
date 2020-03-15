@@ -8,6 +8,7 @@ ENV USER "amano"
 ENV HOME /home/${USER}
 ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
+ENV UBUNTU_CONTAINER_NAME ubuntu18.04
 
 # 一般ユーザーアカウントを追加
 RUN useradd -m ${USER} \
