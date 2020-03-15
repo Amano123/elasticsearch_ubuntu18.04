@@ -31,7 +31,7 @@ RUN set -x \
                 sudo \
                 zsh \
                 vim \
-                git \ 
+                git \
                 ## python3 
                 python3 \
                 python3-pip \
@@ -43,6 +43,24 @@ RUN set -x \
                 language-pack-ja \
 &&  ln -s /usr/bin/python3 /usr/bin/python \
 &&  ln -s /usr/bin/pip3 /usr/bin/pip \
+&&  apt-get -y clean \
+&&  rm -rf /var/lib/apt/lists/* \
+&&  locale-gen ja_JP.UTF-8 \
+&&  pip3 --no-cache-dir install -I setuptools \
+&&  pip3 --no-cache-dir install -Ir \
+                ${HOME}/library.txt \
+&&  rm -rf ${HOME}/library.txt
+
+RUN jupyter notebook --generate-config \
+&&  sed -i -e "s/#c.NotebookApp.pylab = 'disabled'/ \
+		          c.NotebookApp.pylab = 'disabled'/" \
+		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
+&&  sed -i -e "s/#c.NotebookApp.ip = 'localhost'/ \
+		          c.NotebookApp.ip = '${UBUNTU_CONTAINER_NAME}'/" \
+		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
+&&  sed -i -e "s/#c.NotebookApp.token = '<generated>'/ \
+		          c.NotebookApp.token = ''/" \
+		  /home/${USER}/.jupyter/jupyter_notebook_config.py
 
 # 以降のRUN/CMDを実行するユーザー
 USER ${USER}
