@@ -49,3 +49,4 @@ COPY .zshrc ${HOME}
 WORKDIR ${HOME}
 
 CMD ["/bin/zsh"]
+

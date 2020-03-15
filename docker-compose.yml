@@ -25,6 +25,7 @@ services:
       dockerfile: dockerfile
     container_name: ubuntu18.04
     ports:
-      - 80:80
+      - 80:8888
     tty: true
+
 
