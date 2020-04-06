@@ -18,6 +18,7 @@ services:
         hard: -1
     ports:
       - 9200:9200
+    tty: true
 
   ubuntu18.04:
     build:
