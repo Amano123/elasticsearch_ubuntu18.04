@@ -1,35 +1,31 @@
 # 仮想化するベースOS
 FROM ubuntu:18.04
 # 誰が作ったかは入れておきましょう
-LABEL maintainer="amano123"
+LABEL maintainer="ynkmr"
 
 # 各環境変数を設定
-ENV USER "amano"
+ENV USER "ynkmr"
 ENV HOME /home/${USER}
 ENV DEBCONF_NOWARNINGS yes
-ENV SHELL /usr/bin/zsh
-ENV UBUNTU_CONTAINER_NAME ubuntu18.04
+ENV SHELL /usr/bin/bash
+ENV UBUNTU_CONTAINER_NAME ubuntu
 
 # 一般ユーザーアカウントを追加
 RUN useradd -m ${USER} \
 # 一般ユーザーにsudo権限を付与
 &&  gpasswd -a ${USER} sudo \
 # 一般ユーザーのパスワード設定
-&&  echo "${USER}:amano" | chpasswd
+&&  echo "${USER}:katsudon" | chpasswd
 
 # 設定ファイルをコピー
-## zsh
-COPY .zshrc ${HOME}
 ## python
 COPY ./python3/library/library.txt ${HOME}/library.txt
 
-RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
-
-RUN set -x \
+RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list \
+&&  set -x \
 &&  apt-get update \
 &&  apt-get install -y --no-install-recommends \
                 sudo \
-                zsh \
                 vim \
                 git \
                 ## python3 
@@ -49,9 +45,10 @@ RUN set -x \
 &&  pip3 --no-cache-dir install -I setuptools \
 &&  pip3 --no-cache-dir install -Ir \
                 ${HOME}/library.txt \
-&&  rm -rf ${HOME}/library.txt
-
-RUN jupyter notebook --generate-config \
+&&  rm -rf ${HOME}/library.txt \
+&&  pip install elasticsearch \
+&&  mkdir /bin/home/elastic \
+&&  jupyter notebook --generate-config \
 &&  sed -i -e "s/#c.NotebookApp.pylab = 'disabled'/ \
 		          c.NotebookApp.pylab = 'disabled'/" \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
@@ -68,5 +65,4 @@ USER ${USER}
 # 以降の作業ディレクトリを指定
 WORKDIR ${HOME}
 
-CMD ["/bin/zsh"]
-
+CMD ["/bin/bash"]

@@ -20,11 +20,13 @@ services:
       - 9200:9200
     tty: true
 
-  ubuntu18.04:
+  ubuntu:
     build:
-      context: ./Ubuntu18.04
+      context: ./Ubuntu
       dockerfile: dockerfile
-    container_name: ubuntu18.04
+    container_name: ubuntu
+    volumes:
+      - ./src:/home/
     ports:
       - 80:8888
     tty: true
