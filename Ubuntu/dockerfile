@@ -46,8 +46,7 @@ RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.l
 &&  pip3 --no-cache-dir install -Ir \
                 ${HOME}/library.txt \
 &&  rm -rf ${HOME}/library.txt \
-&&  pip install elasticsearch \
-&&  mkdir /home/elastic 
+&&  pip install elasticsearch 
 
 # 以降のRUN/CMDを実行するユーザー
 USER ${USER}
