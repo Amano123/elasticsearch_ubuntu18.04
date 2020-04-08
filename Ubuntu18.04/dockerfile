@@ -10,23 +10,16 @@ ENV DEBCONF_NOWARNINGS yes
 ENV SHELL /usr/bin/zsh
 ENV UBUNTU_CONTAINER_NAME ubuntu18.04
 
-# 一般ユーザーアカウントを追加
-RUN useradd -m ${USER} \
-# 一般ユーザーにsudo権限を付与
-&&  gpasswd -a ${USER} sudo \
-# 一般ユーザーのパスワード設定
-&&  echo "${USER}:amano" | chpasswd
-
 # 設定ファイルをコピー
-## zsh
-COPY .zshrc ${HOME}
 ## python
-COPY ./python3/library/library.txt ${HOME}/library.txt
+COPY ./python3/library/library.txt /
 
+# サーバーを日本のサーバーに変更
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 
 RUN set -x \
 &&  apt-get update \
+&&  apt upgrade -y --no-install-recommends\
 &&  apt-get install -y --no-install-recommends \
                 sudo \
                 zsh \
@@ -41,15 +34,29 @@ RUN set -x \
                 ## japanese
                 language-pack-ja-base \
                 language-pack-ja \
+# python3 → python
 &&  ln -s /usr/bin/python3 /usr/bin/python \
+# pip3 → pip
 &&  ln -s /usr/bin/pip3 /usr/bin/pip \
 &&  apt-get -y clean \
 &&  rm -rf /var/lib/apt/lists/* \
+# 日本語化
 &&  locale-gen ja_JP.UTF-8 \
+# USER
+## 一般ユーザーアカウントを追加
+&& useradd -m ${USER} \
+## 一般ユーザーにsudo権限を付与
+&&  gpasswd -a ${USER} sudo \
+## 一般ユーザーのパスワード設定
+&&  echo "${USER}:amano" | chpasswd \
+## sudo passを無くす
+&&  echo "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER \
+# Pythonのライブラリ追加
+&&  python3 -m pip --no-cache-dir install --upgrade pip \
 &&  pip3 --no-cache-dir install -I setuptools \
-&&  pip3 --no-cache-dir install -Ir \
-                ${HOME}/library.txt \
-&&  rm -rf ${HOME}/library.txt
+&&  python3 -m pip --no-cache-dir install --upgrade tensorflow \
+#&&  pip3 --no-cache-dir install -Ir /library.txt \
+&&  rm -rf /library.txt
 
 RUN jupyter notebook --generate-config \
 &&  sed -i -e "s/#c.NotebookApp.pylab = 'disabled'/ \
@@ -61,6 +68,8 @@ RUN jupyter notebook --generate-config \
 &&  sed -i -e "s/#c.NotebookApp.token = '<generated>'/ \
 		          c.NotebookApp.token = ''/" \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py
+## zsh
+COPY .zshrc ${HOME}
 
 # 以降のRUN/CMDを実行するユーザー
 USER ${USER}
