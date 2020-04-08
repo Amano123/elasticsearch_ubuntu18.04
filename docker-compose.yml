@@ -25,6 +25,8 @@ services:
       context: ./Ubuntu18.04
       dockerfile: dockerfile
     container_name: ubuntu18.04
+    volumes:
+      - ./Ubuntu18.04/tokyo2021:/home/amano/tokyo2021
     ports:
       - 80:8888
     tty: true
