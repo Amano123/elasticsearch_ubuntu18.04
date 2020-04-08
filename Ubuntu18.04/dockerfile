@@ -55,7 +55,7 @@ RUN set -x \
 &&  python3 -m pip --no-cache-dir install --upgrade pip \
 &&  pip3 --no-cache-dir install -I setuptools \
 &&  python3 -m pip --no-cache-dir install --upgrade tensorflow \
-#&&  pip3 --no-cache-dir install -Ir /library.txt \
+&&  pip3 --no-cache-dir install -Ir /library.txt \
 &&  rm -rf /library.txt
 
 RUN jupyter notebook --generate-config \
