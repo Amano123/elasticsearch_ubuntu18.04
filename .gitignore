@@ -1,5 +1,6 @@
 es-data/*
 .DS_Store
-Ubuntu18.04/tokyo2021/*
+tokyo2020+1/*
+!supplied
 !.gitkeep
 
