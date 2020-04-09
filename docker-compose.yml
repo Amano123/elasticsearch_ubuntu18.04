@@ -28,7 +28,7 @@ services:
     volumes:
       - ./tokyo2020+1:/home/amano/tokyo2020+1
     ports:
-      - 88:8888
+      - 8888:8888
     tty: true
 
 
