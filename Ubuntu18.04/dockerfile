@@ -65,6 +65,8 @@ RUN jupyter notebook --generate-config \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
 &&  sed -i -e "s/#c.NotebookApp.token = '<generated>'/c.NotebookApp.token = ''/" \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
+&&  sed -i -e "s/#c.NotebookApp.notebook_dir = ''/c.NotebookApp.notebook_dir = '\/home\/amano\/tokyo2020+1'/" \
+		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
 &&  chmod -R 777 /home/amano/.jupyter 
 ## zsh
 COPY .zshrc ${HOME}
