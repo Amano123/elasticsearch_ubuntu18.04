@@ -59,15 +59,13 @@ RUN set -x \
 &&  rm -rf /library.txt
 
 RUN jupyter notebook --generate-config \
-&&  sed -i -e "s/#c.NotebookApp.pylab = 'disabled'/ \
-		          c.NotebookApp.pylab = 'disabled'/" \
+&&  sed -i -e "s/#c.NotebookApp.pylab = 'disabled'/c.NotebookApp.pylab = 'disabled'/" \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
-&&  sed -i -e "s/#c.NotebookApp.ip = 'localhost'/ \
-		          c.NotebookApp.ip = '${UBUNTU_CONTAINER_NAME}'/" \
+&&  sed -i -e "s/#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip = '${UBUNTU_CONTAINER_NAME}'/" \
 		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
-&&  sed -i -e "s/#c.NotebookApp.token = '<generated>'/ \
-		          c.NotebookApp.token = ''/" \
-		  /home/${USER}/.jupyter/jupyter_notebook_config.py
+&&  sed -i -e "s/#c.NotebookApp.token = '<generated>'/c.NotebookApp.token = ''/" \
+		  /home/${USER}/.jupyter/jupyter_notebook_config.py \
+&&  chmod -R 777 /home/amano/.jupyter 
 ## zsh
 COPY .zshrc ${HOME}
 
