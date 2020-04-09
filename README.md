@@ -14,12 +14,12 @@ volumeをどの様に管理するかは後々考えて行こうと思う
 ├── README.md
 ├── Ubuntu18.04
 │   ├── dockerfile
-│   ├── jupyter_lab
-│   └── python3
-│       └── library
-│           └── library.txt
+│   ├── python3
+│   │   └── library
+│   │       └── library.txt [ライブラリ管理用]
+│   └── tokyo2021 [この中身は共有されるUbuntu用]
 ├── docker-compose.yml
-└── es-data
+└── es-data[この中身は共有されるElasticsearch用]
 ```
 
 ## 環境
