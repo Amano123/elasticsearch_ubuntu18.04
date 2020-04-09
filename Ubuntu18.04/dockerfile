@@ -54,7 +54,7 @@ RUN set -x \
 # Pythonのライブラリ追加
 &&  python3 -m pip --no-cache-dir install --upgrade pip \
 &&  pip3 --no-cache-dir install -I setuptools \
-&&  python3 -m pip --no-cache-dir install --upgrade tensorflow \
+&&  python3 -m pip --no-cache-dir install --upgrade tensorflow nodejs \
 &&  pip3 --no-cache-dir install -Ir /library.txt \
 &&  rm -rf /library.txt
 
